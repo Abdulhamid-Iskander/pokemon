@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../domain/entities/pokemon_entity.dart';
 import '../../../widgets/type_badge.dart';
 import '../../../widgets/role_badge.dart';
+import '../../../widgets/type_animated_background.dart';
 import '../../../../../../core/theme/app_theme.dart';
 
 class AnalyticsHeader extends StatelessWidget {
@@ -21,6 +22,7 @@ class AnalyticsHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
+          width: double.infinity,
           height: 300,
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -29,19 +31,27 @@ class AnalyticsHeader extends StatelessWidget {
               colors: [accentColor.withOpacity(0.3), AppTheme.background],
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
+            alignment: Alignment.center,
             children: [
-              const SizedBox(height: 80),
-              Hero(
-                tag: 'pokemon-${pokemon.id}',
-                child: pokemon.imageUrl.isNotEmpty
-                    ? CachedNetworkImage(
-                        imageUrl: pokemon.imageUrl,
-                        height: 160,
-                        fit: BoxFit.contain,
-                      )
-                    : const Icon(Icons.catching_pokemon, size: 120, color: Colors.white24),
+              Positioned.fill(
+                child: TypeAnimatedBackground(type: pokemon.primaryType),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 80),
+                  Hero(
+                    tag: 'pokemon-${pokemon.id}',
+                    child: pokemon.imageUrl.isNotEmpty
+                        ? CachedNetworkImage(
+                            imageUrl: pokemon.imageUrl,
+                            height: 160,
+                            fit: BoxFit.contain,
+                          )
+                        : const Icon(Icons.catching_pokemon, size: 120, color: Colors.white24),
+                  ),
+                ],
               ),
             ],
           ),
