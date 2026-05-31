@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/home_cubit.dart';
-import '../cubit/home_state.dart';
 import 'home_screen.dart';
 import 'splash/particle.dart';
 import 'splash/particle_painter.dart';
