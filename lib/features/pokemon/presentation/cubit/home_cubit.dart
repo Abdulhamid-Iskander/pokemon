@@ -17,142 +17,77 @@ class HomeCubit extends Cubit<HomeState> {
     emit(HomeLoading());
     try {
       final list = await _useCases.fetchMasterList();
-      emit(HomeLoaded(
-        allPokemon: list,
-        filteredPokemon: list,
-        dashboardDetails: [],
-        isLoadingDashboard: true,
-      ));
+      emit(HomeLoaded(allPokemon: list, filteredPokemon: list, dashboardDetails: [], isLoadingDashboard: true));
       await _loadDetails(list, null, null);
     } catch (e) {
       emit(HomeError('Failed to load Pokémon: ${e.toString()}'));
     }
   }
 
+  void _stopLoading() {
+    final s = state;
+    if (s is HomeLoaded) emit(s.copyWith(isLoadingDashboard: false));
+  }
+
   Future<void> _loadDetails(List<PokemonListItemModel> filteredList, String? type, String? role) async {
     try {
-      final current = state;
-      if (current is! HomeLoaded) return;
-
+      final curr = state; if (curr is! HomeLoaded) return;
       await _fetcher.loadDashboardDetails(
         filteredList: filteredList,
-        currentDetails: current.dashboardDetails,
+        currentDetails: curr.dashboardDetails,
         type: type,
         role: role,
         onBatchLoaded: (updatedDetails) {
           final updated = state;
           if (updated is HomeLoaded) {
-            final hero = updatedDetails.isEmpty
-                ? null
-                : updatedDetails.reduce((a, b) => a.trueCombatPower > b.trueCombatPower ? a : b);
-            emit(updated.copyWith(
-              dashboardDetails: updatedDetails,
-              heroPokemon: hero,
-            ));
+            final hero = updatedDetails.isEmpty ? null : updatedDetails.reduce((a, b) => a.trueCombatPower > b.trueCombatPower ? a : b);
+            emit(updated.copyWith(dashboardDetails: updatedDetails, heroPokemon: hero));
           }
         },
       );
-
-      final finalState = state;
-      if (finalState is HomeLoaded) {
-        emit(finalState.copyWith(isLoadingDashboard: false));
-      }
+      _stopLoading();
     } catch (_) {
-      final finalState = state;
-      if (finalState is HomeLoaded) {
-        emit(finalState.copyWith(isLoadingDashboard: false));
-      }
+      _stopLoading();
     }
   }
 
   void onSearchChanged(String query) {
     _debouncer.run(() async {
-      final current = state;
-      if (current is! HomeLoaded) return;
-
-      emit(current.copyWith(isLoadingDashboard: true, searchQuery: query));
-
+      final curr = state; if (curr is! HomeLoaded) return;
+      emit(curr.copyWith(isLoadingDashboard: true, searchQuery: query));
       try {
-        final base = _useCases.searchPokemon(query);
-        final filtered = await _fetcher.applyTypeFilter(base, current.selectedType);
-
-        emit(current.copyWith(
-          searchQuery: query,
-          filteredPokemon: filtered,
-          isLoadingDashboard: true,
-        ));
-
-        await _loadDetails(filtered, current.selectedType, current.selectedRole);
+        final filtered = await _fetcher.applyTypeFilter(_useCases.searchPokemon(query), curr.selectedType);
+        emit(curr.copyWith(searchQuery: query, filteredPokemon: filtered, isLoadingDashboard: true));
+        await _loadDetails(filtered, curr.selectedType, curr.selectedRole);
       } catch (_) {
-        final updated = state;
-        if (updated is HomeLoaded) {
-          emit(updated.copyWith(isLoadingDashboard: false));
-        }
+        _stopLoading();
       }
     });
   }
 
   Future<void> onTypeFilterSelected(String? type) async {
-    final current = state;
-    if (current is! HomeLoaded) return;
-
-    final newType = current.selectedType == type ? null : type;
-
-    emit(current.copyWith(
-      selectedType: newType,
-      isLoadingDashboard: true,
-      clearType: newType == null,
-    ));
-
+    final curr = state; if (curr is! HomeLoaded) return;
+    final newType = curr.selectedType == type ? null : type;
+    emit(curr.copyWith(selectedType: newType, isLoadingDashboard: true, clearType: newType == null));
     try {
-      final base = _useCases.searchPokemon(current.searchQuery);
-      final filtered = await _fetcher.applyTypeFilter(base, newType);
-
-      emit(current.copyWith(
-        selectedType: newType,
-        filteredPokemon: filtered,
-        isLoadingDashboard: true,
-        clearType: newType == null,
-      ));
-
-      await _loadDetails(filtered, newType, current.selectedRole);
+      final filtered = await _fetcher.applyTypeFilter(_useCases.searchPokemon(curr.searchQuery), newType);
+      emit(curr.copyWith(selectedType: newType, filteredPokemon: filtered, isLoadingDashboard: true, clearType: newType == null));
+      await _loadDetails(filtered, newType, curr.selectedRole);
     } catch (_) {
-      final updated = state;
-      if (updated is HomeLoaded) {
-        emit(updated.copyWith(isLoadingDashboard: false));
-      }
+      _stopLoading();
     }
   }
 
   Future<void> onRoleFilterSelected(String? role) async {
-    final current = state;
-    if (current is! HomeLoaded) return;
-
-    final newRole = current.selectedRole == role ? null : role;
-
-    emit(current.copyWith(
-      selectedRole: newRole,
-      isLoadingDashboard: true,
-      clearRole: newRole == null,
-    ));
-
+    final curr = state; if (curr is! HomeLoaded) return;
+    final newRole = curr.selectedRole == role ? null : role;
+    emit(curr.copyWith(selectedRole: newRole, isLoadingDashboard: true, clearRole: newRole == null));
     try {
-      final base = _useCases.searchPokemon(current.searchQuery);
-      final filtered = await _fetcher.applyTypeFilter(base, current.selectedType);
-
-      emit(current.copyWith(
-        selectedRole: newRole,
-        filteredPokemon: filtered,
-        isLoadingDashboard: true,
-        clearRole: newRole == null,
-      ));
-
-      await _loadDetails(filtered, current.selectedType, newRole);
+      final filtered = await _fetcher.applyTypeFilter(_useCases.searchPokemon(curr.searchQuery), curr.selectedType);
+      emit(curr.copyWith(selectedRole: newRole, filteredPokemon: filtered, isLoadingDashboard: true, clearRole: newRole == null));
+      await _loadDetails(filtered, curr.selectedType, newRole);
     } catch (_) {
-      final updated = state;
-      if (updated is HomeLoaded) {
-        emit(updated.copyWith(isLoadingDashboard: false));
-      }
+      _stopLoading();
     }
   }
 
