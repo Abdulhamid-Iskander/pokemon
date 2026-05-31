@@ -6,6 +6,8 @@ import '../../../../../core/utils/debouncer.dart';
 import 'home_state.dart';
 import 'home_data_fetcher.dart';
 
+export 'home_state.dart';
+
 class HomeCubit extends Cubit<HomeState> {
   final PokemonUseCases _useCases = PokemonUseCases();
   final Debouncer _debouncer = Debouncer();
