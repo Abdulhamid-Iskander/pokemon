@@ -16,7 +16,6 @@ class _PokemonPickerSheetState extends State<PokemonPickerSheet> {
   final _local = LocalDataSource();
   final _debouncer = Debouncer();
   final _controller = TextEditingController();
-
   List<PokemonListItemModel> _results = [];
 
   @override
@@ -50,32 +49,21 @@ class _PokemonPickerSheetState extends State<PokemonPickerSheet> {
           height: MediaQuery.of(context).size.height * 0.75,
           decoration: const BoxDecoration(
             color: Color(0xE6121218),
-            borderRadius:
-                BorderRadius.vertical(top: Radius.circular(24)),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           child: Column(
             children: [
-              
               Container(
                 margin: const EdgeInsets.only(top: 10),
                 width: 40,
                 height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.white24,
-                  borderRadius: BorderRadius.circular(2),
-                ),
+                decoration: BoxDecoration(color: Colors.white24, borderRadius: BorderRadius.circular(2)),
               ),
               const SizedBox(height: 12),
               const Text(
                 'SELECT FIGHTER',
-                style: TextStyle(
-                  color: AppTheme.textMuted,
-                  fontSize: 11,
-                  letterSpacing: 2,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(color: AppTheme.textMuted, fontSize: 11, letterSpacing: 2, fontWeight: FontWeight.bold),
               ),
-              
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Container(
@@ -88,22 +76,17 @@ class _PokemonPickerSheetState extends State<PokemonPickerSheet> {
                   child: Row(
                     children: [
                       const SizedBox(width: 14),
-                      const Icon(Icons.search,
-                          color: AppTheme.textMuted, size: 18),
+                      const Icon(Icons.search, color: AppTheme.textMuted, size: 18),
                       const SizedBox(width: 8),
                       Expanded(
                         child: TextField(
                           controller: _controller,
                           onChanged: _onSearch,
                           autofocus: true,
-                          style: const TextStyle(
-                              color: AppTheme.textPrimary,
-                              fontSize: 14),
+                          style: const TextStyle(color: AppTheme.textPrimary, fontSize: 14),
                           decoration: const InputDecoration(
                             hintText: 'Search by name...',
-                            hintStyle: TextStyle(
-                                color: AppTheme.textMuted,
-                                fontSize: 14),
+                            hintStyle: TextStyle(color: AppTheme.textMuted, fontSize: 14),
                             border: InputBorder.none,
                             isDense: true,
                           ),
@@ -113,7 +96,6 @@ class _PokemonPickerSheetState extends State<PokemonPickerSheet> {
                   ),
                 ),
               ),
-              
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -122,20 +104,12 @@ class _PokemonPickerSheetState extends State<PokemonPickerSheet> {
                     final p = _results[i];
                     return ListTile(
                       dense: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 8),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                       leading: Text(
                         '#${p.id.toString().padLeft(4, '0')}',
-                        style: const TextStyle(
-                            color: AppTheme.textMuted, fontSize: 11),
+                        style: const TextStyle(color: AppTheme.textMuted, fontSize: 11),
                       ),
-                      title: Text(
-                        p.capitalizedName,
-                        style: const TextStyle(
-                          color: AppTheme.textPrimary,
-                          fontSize: 14,
-                        ),
-                      ),
+                      title: Text(p.capitalizedName, style: const TextStyle(color: AppTheme.textPrimary, fontSize: 14)),
                       onTap: () => Navigator.pop(context, p.name),
                     );
                   },
