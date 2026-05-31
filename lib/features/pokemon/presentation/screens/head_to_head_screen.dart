@@ -12,7 +12,6 @@ import '../../../../../core/theme/app_theme.dart';
 
 class HeadToHeadScreen extends StatelessWidget {
   final PokemonEntity? initialPokemonA;
-
   const HeadToHeadScreen({super.key, this.initialPokemonA});
 
   @override
@@ -44,20 +43,13 @@ class _H2HView extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios_new, color: AppTheme.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'HEAD-TO-HEAD',
-          style: TextStyle(letterSpacing: 2, fontSize: 15),
-        ),
+        title: const Text('HEAD-TO-HEAD', style: TextStyle(letterSpacing: 2, fontSize: 15)),
         centerTitle: true,
       ),
       body: BlocBuilder<HeadToHeadCubit, HeadToHeadState>(
         builder: (context, state) {
           if (state is H2HLoading) {
-            return const Center(
-              child: PulsingPokeballLoader(
-                label: 'Retrieving battle simulation data...',
-              ),
-            );
+            return const Center(child: PulsingPokeballLoader(label: 'Retrieving battle simulation data...'));
           }
 
           final loaded = state is H2HLoaded ? state : H2HLoaded();
@@ -70,32 +62,14 @@ class _H2HView extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: FighterSlot(
-                        pokemon: loaded.pokemonA,
-                        label: 'FIGHTER A',
-                        isA: true,
-                        accentColor: AppTheme.accent,
-                      ),
+                      child: FighterSlot(pokemon: loaded.pokemonA, label: 'FIGHTER A', isA: true, accentColor: AppTheme.accent),
                     ),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 8),
-                      child: const Text(
-                        'VS',
-                        style: TextStyle(
-                          color: AppTheme.accentSecondary,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
-                        ),
-                      ),
+                      child: const Text('VS', style: TextStyle(color: AppTheme.accentSecondary, fontSize: 22, fontWeight: FontWeight.bold, letterSpacing: 2)),
                     ),
                     Expanded(
-                      child: FighterSlot(
-                        pokemon: loaded.pokemonB,
-                        label: 'FIGHTER B',
-                        isA: false,
-                        accentColor: AppTheme.accentSecondary,
-                      ),
+                      child: FighterSlot(pokemon: loaded.pokemonB, label: 'FIGHTER B', isA: false, accentColor: AppTheme.accentSecondary),
                     ),
                   ],
                 ),
@@ -111,36 +85,20 @@ class _H2HView extends StatelessWidget {
                           children: [
                             _legendDot(AppTheme.accent),
                             const SizedBox(width: 6),
-                            Text(
-                              loaded.pokemonA!.capitalizedName,
-                              style: const TextStyle(color: AppTheme.textSecondary, fontSize: 12),
-                            ),
+                            Text(loaded.pokemonA!.capitalizedName, style: const TextStyle(color: AppTheme.textSecondary, fontSize: 12)),
                             const SizedBox(width: 16),
                             _legendDot(AppTheme.accentSecondary),
                             const SizedBox(width: 6),
-                            Text(
-                              loaded.pokemonB!.capitalizedName,
-                              style: const TextStyle(color: AppTheme.textSecondary, fontSize: 12),
-                            ),
+                            Text(loaded.pokemonB!.capitalizedName, style: const TextStyle(color: AppTheme.textSecondary, fontSize: 12)),
                           ],
                         ),
                         const SizedBox(height: 12),
-                        HeadToHeadChart(
-                          pokemonA: loaded.pokemonA!,
-                          pokemonB: loaded.pokemonB!,
-                          colorA: AppTheme.accent,
-                          colorB: AppTheme.accentSecondary,
-                        ),
+                        HeadToHeadChart(pokemonA: loaded.pokemonA!, pokemonB: loaded.pokemonB!, colorA: AppTheme.accent, colorB: AppTheme.accentSecondary),
                       ],
                     ),
                   ),
                 const SizedBox(height: 16),
-                if (loaded.statDiff != null)
-                  StatDiffTable(
-                    diff: loaded.statDiff!,
-                    pokemonA: loaded.pokemonA!,
-                    pokemonB: loaded.pokemonB!,
-                  ),
+                if (loaded.statDiff != null) StatDiffTable(diff: loaded.statDiff!, pokemonA: loaded.pokemonA!, pokemonB: loaded.pokemonB!),
                 const SizedBox(height: 40),
               ],
             ),
