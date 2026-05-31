@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../domain/entities/pokemon_entity.dart';
-import '../../cubit/head_to_head_cubit.dart';
-import '../../widgets/glass_card.dart';
-import '../../widgets/type_badge.dart';
+import '../../../domain/entities/pokemon_entity.dart';
+import '../../../cubit/head_to_head_cubit.dart';
+import '../../../widgets/glass_card.dart';
+import '../../../widgets/type_badge.dart';
 import '../_pokemon_picker_sheet.dart';
 import '../../../../../../core/theme/app_theme.dart';
 
