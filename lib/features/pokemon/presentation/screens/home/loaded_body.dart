@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../cubit/home_cubit.dart';
-import '../../cubit/home_state.dart';
 import '../../widgets/hero_banner.dart';
 import '../../widgets/floating_search_bar.dart';
 import '../../widgets/shimmer/pulsing_dot.dart';
@@ -116,7 +115,7 @@ class LoadedBody extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverGrid(
               delegate: SliverChildBuilderDelegate(
-                (_, i) => const ShimmerCard(),
+                (_, i) => const ShimmerLoadingCard(),
                 childCount: 10,
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

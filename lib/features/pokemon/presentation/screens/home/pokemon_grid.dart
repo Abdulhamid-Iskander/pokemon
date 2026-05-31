@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../domain/entities/pokemon_entity.dart';
-import '../../data/models/pokemon_list_item_model.dart';
+import '../../../domain/entities/pokemon_entity.dart';
+import '../../../data/models/pokemon_list_item_model.dart';
 import '../../widgets/pokemon_card.dart';
-import '../../../../../core/theme/app_theme.dart';
+import '../../../../../../core/theme/app_theme.dart';
 
 class PokemonGrid extends StatelessWidget {
   final List<PokemonListItemModel> allItems;
