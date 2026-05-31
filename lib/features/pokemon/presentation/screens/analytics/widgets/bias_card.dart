@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../domain/entities/pokemon_entity.dart';
-import '../../widgets/glass_card.dart';
+import '../../../../domain/entities/pokemon_entity.dart';
+import '../../../widgets/glass_card.dart';
 import '../../../../../../core/theme/app_theme.dart';
 
 class BiasCard extends StatelessWidget {

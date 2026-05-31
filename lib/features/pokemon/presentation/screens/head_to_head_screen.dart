@@ -17,13 +17,7 @@ class HeadToHeadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) {
-        final cubit = HeadToHeadCubit();
-        if (initialPokemonA != null) {
-          cubit.emit(H2HLoaded(pokemonA: initialPokemonA));
-        }
-        return cubit;
-      },
+      create: (_) => HeadToHeadCubit(initialPokemonA: initialPokemonA),
       child: const _H2HView(),
     );
   }

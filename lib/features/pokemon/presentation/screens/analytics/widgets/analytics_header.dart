@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../domain/entities/pokemon_entity.dart';
-import '../../../../widgets/type_badge.dart';
-import '../../../../widgets/role_badge.dart';
+import '../../../widgets/type_badge.dart';
+import '../../../widgets/role_badge.dart';
 import '../../../../../../core/theme/app_theme.dart';
 
 class AnalyticsHeader extends StatelessWidget {

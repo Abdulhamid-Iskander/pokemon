@@ -30,7 +30,8 @@ class H2HError extends HeadToHeadState {
 class HeadToHeadCubit extends Cubit<HeadToHeadState> {
   final PokemonUseCases _useCases = PokemonUseCases();
 
-  HeadToHeadCubit() : super(H2HInitial());
+  HeadToHeadCubit({PokemonEntity? initialPokemonA})
+      : super(initialPokemonA != null ? H2HLoaded(pokemonA: initialPokemonA) : H2HInitial());
 
   Future<void> selectPokemon(String nameOrId, {required bool isA}) async {
     final current = state;
