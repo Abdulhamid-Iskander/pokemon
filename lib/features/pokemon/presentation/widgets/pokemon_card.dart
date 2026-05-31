@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import '../../domain/entities/pokemon_entity.dart';
 import '../../../../../core/theme/app_theme.dart';
 import 'glass_card.dart';
 import 'type_badge.dart';
 import 'role_badge.dart';
-import 'shimmer/shimmer_container.dart';
+import 'pokemon_card_image.dart';
 import '../screens/analytics_screen.dart';
 
 class PokemonCard extends StatefulWidget {
@@ -84,32 +83,7 @@ class _PokemonCardState extends State<PokemonCard> with SingleTickerProviderStat
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Hero(
-                tag: 'pokemon-${p.id}',
-                child: Container(
-                  height: 110,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [accent.withOpacity(0.15), Colors.transparent],
-                    ),
-                  ),
-                  child: p.imageUrl.isNotEmpty
-                      ? CachedNetworkImage(
-                          imageUrl: p.imageUrl,
-                          fit: BoxFit.contain,
-                          placeholder: (_, __) => const Center(
-                            child: ShimmerContainer(width: 80, height: 80, borderRadius: 40),
-                          ),
-                          errorWidget: (_, __, ___) =>
-                              const Icon(Icons.catching_pokemon, size: 50, color: Colors.white24),
-                        )
-                      : const Icon(Icons.catching_pokemon, size: 50, color: Colors.white24),
-                ),
-              ),
+              PokemonCardImage(pokemon: p, accentColor: accent),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
                 child: Column(
