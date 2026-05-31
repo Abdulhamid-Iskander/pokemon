@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../cubit/home_cubit.dart';
-import '../../../cubit/home_state.dart';
 import '../../../widgets/filter_chips_row.dart';
 import '../../../../../../core/theme/app_theme.dart';
 
