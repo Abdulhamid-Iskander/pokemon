@@ -111,8 +111,6 @@ Features an animated hero section that transitions smoothly to the details scree
 - `cached_network_image`: Image caching
 - `palette_generator`: Color extraction
 
-## License
-[Your License Here]
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request.
